@@ -345,6 +345,7 @@ button {
   font-size: clamp(13px, 0.84vw, 16px);
   position: relative;
   color: var(--white);
+  text-align: center;
 }
 .ul-btn:hover {
   color: var(--ul-primary);
@@ -3532,6 +3533,9 @@ button {
   padding: clamp(25px, 2.1vw, 40px) clamp(15px, 8.41vw, 160px);
   color: var(--white);
   height: 100%;
+  display: flex;
+  flex-direction: column; /* Stacks its children vertically (h2, p, ul, a.ul-btn) */
+  align-items: center;
 }
 @media screen and (max-width: 1199px) {
   .ul-volunteer-block {
@@ -3563,20 +3567,26 @@ button {
   color: var(--white);
 }
 .ul-volunteer-title {
-  font-family: var(--font-caveat);
+  font-family: var(--font-quicksand);
   font-weight: 400;
   font-size: clamp(30px, 2.1vw, 40px);
+  text-align: center;
 }
 .ul-volunteer-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px clamp(30px, 2.1vw, 40px);
   margin-bottom: clamp(15px, 1.31vw, 25px);
+  justify-content: center;
+
 }
 .ul-volunteer-list li {
   display: flex;
   align-items: center;
   gap: clamp(7px, 0.53vw, 10px);
+}
+.ul-volunteer-descr {
+  text-align: center;
 }
 .ul-volunteer-list li::before {
   content: "\f106";
