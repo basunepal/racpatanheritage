@@ -134,7 +134,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* clears the ‘X’ from Chrome */
+/* clears the 'X' from Chrome */
 input[type=search]::-webkit-search-decoration,
 input[type=search]::-webkit-search-cancel-button,
 input[type=search]::-webkit-search-results-button,
@@ -755,6 +755,120 @@ button {
     padding: 10px clamp(18px, 1.31vw, 25px);
   }
 }
+
+@media (max-width: 991px) { /* Adjust this breakpoint if your d-lg-none means something else */
+
+    /* Show the hamburger button on mobile screens */
+    .ul-header-sidebar-opener {
+        display: flex; /* Override 'display: none' to show it on mobile */
+    }
+
+    /* Initial state of the mobile menu container (hidden off-screen) */
+    .white-sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: clamp(180px, 45vw, 240px); /* Reduce sidebar width to less than half the viewport width */
+        height: 100vh;
+        background-color: white; /* White background as requested */
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+
+        transform: translateX(100%); /* Hides it off-screen to the right */
+        transition: transform 0.3s ease-out; /* Smooth slide animation */
+
+        padding: 20px 10px 20px 20px; /* Reduce right padding from 20px to 10px */
+        box-sizing: border-box; /* Include padding in width/height */
+        /* Use flexbox to organize content inside sidebar vertically */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Align content to the left inside the sidebar */
+    }
+
+    /* State when the sidebar should be visible */
+    .white-sidebar.visible {
+        transform: translateX(0); /* Slides the menu fully into view */
+    }
+
+    /* Style for the close button */
+    .sidebar-close-btn {
+        background: none;
+        border: none;
+        color: #333; /* Darker color for the close icon */
+        font-size: 1.2rem; /* Decrease close icon size from 1.8rem to 1.2rem */
+        cursor: pointer;
+        padding: 6px; /* Reduce padding for smaller button */
+        align-self: flex-end; /* Pushes the close button to the top right of the sidebar */
+        margin-bottom: 20px; /* Space below the button */
+    }
+    .sidebar-close-btn i {
+        /* If using Flaticon, these styles usually come from the font */
+        line-height: 1; /* Ensure icon is centered */
+        font-size: 1.2rem; /* Ensure icon itself is smaller */
+    }
+
+
+    /* Styling for the actual menu links inside the sidebar */
+    .mobile-nav-menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* Make the menu fill sidebar width */
+        align-items: flex-start; /* Align menu items to the left */
+        flex-grow: 1; /* Allows the menu to take up available vertical space */
+        justify-content: flex-start; /* Start links from the top */
+    }
+
+    .mobile-nav-menu .menu-link { /* Using .menu-link for specific targeting */
+        color: #333; /* Default link color for mobile menu */
+        text-decoration: none;
+        font-size: 16px; /* Set font size to 16px */
+        padding: 10px 0; /* Slightly reduce vertical padding if needed */
+        width: 100%; /* Make links fill full width for easy tapping */
+        border-bottom: 1px solid #eee; /* Separator between links */
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .mobile-nav-menu .menu-link:last-child {
+        border-bottom: none; /* No border for the last link */
+    }
+
+    .mobile-nav-menu .menu-link:hover,
+    .mobile-nav-menu .menu-link.active { /* Hover and active state styling */
+        color: var(--ul-primary); /* Change text color on hover/active */
+    }
+
+
+    /* Hide the desktop menu wrapper on mobile, as the mobile menu is now the active one */
+    .ul-header-nav-wrapper {
+        display: none;
+    }
+
+    /* Prevent scrolling of the body when the mobile menu is open */
+    body.no-scroll {
+        overflow: hidden;
+    }
+}
+
+/* ============================================== */
+/* Desktop Menu Styles (Applies on screens > 991px) */
+/* ============================================== */
+@media (min-width: 992px) {
+    /* Ensure the desktop menu wrapper is visible on large screens */
+    .ul-header-nav-wrapper {
+        display: block; /* Or display: flex; etc. based on your desktop layout */
+    }
+    /* Ensure the sidebar container is hidden on desktop */
+    .white-sidebar {
+        display: none;
+    }
+    .ul-header-nav a {
+        font-size: 16px !important; /* Increase font size by 2px from default 16px */
+    }
+    .ul-header-nav a.active {
+        color: var(--ul-primary) !important;
+    }
+}
+
 .ul-search-closer {
   color: var(--white);
   border: 1px solid var(--white);
@@ -1082,7 +1196,7 @@ button {
 .ul-header-nav a, .ul-header-nav a:not([href]):not([class]) {
   color: var(--white);
 }
-.ul-header-nav a:not([href]):hover, .ul-header-nav a:hover {
+.ul-header-nav a:not([href]):hover, .ul-header-nav a.active {
   color: var(--ul-primary);
 }
 @media screen and (max-width: 991px) {
@@ -1331,6 +1445,7 @@ button {
   background-color: var(--ul-primary);
   height: clamp(45px, 2.94vw, 56px);
   border: 1px solid transparent;
+
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
@@ -1338,6 +1453,7 @@ button {
   border-radius: 50%;
   color: var(--white) !important;
   cursor: pointer;
+
 }
 .ul-header-sidebar-opener:hover {
   color: var(--ul-primary) !important;
@@ -5038,4 +5154,11 @@ button {
 .ul-pricing-package-btn:hover {
   background-color: var(--ul-primary);
   color: var(--white);
-}/*# sourceMappingURL=style.css.map */
+}
+
+@media (max-width: 991px) {
+    .mobile-nav-menu .menu-link:hover {
+        color: var(--ul-primary) !important;
+        background: none !important;
+    }
+}

@@ -71,6 +71,19 @@
     <div id="header"></div>
     <!-- HEADER SECTION END -->
 
+    <!-- MOBILE SIDEBAR SECTION START -->
+    <div id="mySidebar" class="white-sidebar">
+        <button id="sidebarCloseButton" class="sidebar-close-btn">
+            <i class="flaticon-close"></i> </button>
+        <nav class="mobile-nav-menu"> <a href="index.html" class="menu-link">Home</a> <a href="about.html" class="menu-link">About</a>
+            <a href="team.html" class="menu-link">Team</a>
+            <a href="faq.html" class="menu-link active">FAQs</a>
+            <a href="event.html" class="menu-link">Event</a>
+            <a href="contact.html" class="menu-link">Contact</a>
+        </nav>
+    </div>
+    <!-- MOBILE SIDEBAR SECTION END -->
+
 
     <main>
         <!-- BREADCRUMBS SECTION START -->
@@ -182,6 +195,44 @@
       .then(response => response.text())
       .then(data => {
         document.getElementById('header').innerHTML = data;
+
+        // Highlight the active menu link
+        const path = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.ul-header-nav a').forEach(link => {
+          if (link.getAttribute('href') === path) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+
+        // Mobile sidebar open/close logic
+        const sidebarButton = document.getElementById('sidebarOpenButton');
+        const sidebarPanel = document.getElementById('mySidebar');
+        const sidebarCloseButton = document.getElementById('sidebarCloseButton');
+
+        if (sidebarButton && sidebarPanel) {
+            sidebarButton.addEventListener('click', function() {
+                sidebarPanel.classList.add('visible');
+            });
+            if (sidebarCloseButton) {
+                sidebarCloseButton.addEventListener('click', function() {
+                    sidebarPanel.classList.remove('visible');
+                });
+            }
+            document.addEventListener('click', function(event) {
+                const isClickInsideSidebar = sidebarPanel.contains(event.target);
+                const isClickOnOpenButton = sidebarButton.contains(event.target);
+                if (!isClickInsideSidebar && !isClickOnOpenButton && sidebarPanel.classList.contains('visible')) {
+                    sidebarPanel.classList.remove('visible');
+                }
+            });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && sidebarPanel.classList.contains('visible')) {
+                    sidebarPanel.classList.remove('visible');
+                }
+            });
+        }
       });
 
     // Load footer

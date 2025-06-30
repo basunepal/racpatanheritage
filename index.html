@@ -71,6 +71,18 @@
     <div id="header"></div>
     <!-- HEADER SECTION END -->
 
+<div id="mySidebar" class="white-sidebar">
+        <button id="sidebarCloseButton" class="sidebar-close-btn">
+            <i class="flaticon-close"></i> </button>
+
+        <nav class="mobile-nav-menu"> <a href="index.html" class="menu-link active">Home</a> <a href="about.html" class="menu-link">About</a>
+            <a href="team.html" class="menu-link">Team</a>
+            <a href="faq.html" class="menu-link">FAQs</a>
+            <a href="event.html" class="menu-link">Event</a>
+            <a href="contact.html" class="menu-link">Contact</a>
+        </nav>
+    </div>
+
 
     <main>
         <!-- BANNER SECTION START -->
@@ -755,7 +767,7 @@
                                         <span class="text font-normal text-[14px] text-etGray">Donation</span>
                                     </div>
                                 </div>
-                                <a href="blog-details.html" class="ul-blog-title">Give Education, It’s The Best Gift Ever.</a>
+                                <a href="blog-details.html" class="ul-blog-title">Give Education, It's The Best Gift Ever.</a>
                                 <a href="blog-details.html" class="ul-blog-btn">Read More <span class="icon"><i class="flaticon-next"></i></span></a>
                             </div>
                         </div>
@@ -783,7 +795,7 @@
                                         <span class="text font-normal text-[14px] text-etGray">Donation</span>
                                     </div>
                                 </div>
-                                <a href="blog-details.html" class="ul-blog-title">Don’t treat oceans as universal garbage cans</a>
+                                <a href="blog-details.html" class="ul-blog-title">Don't treat oceans as universal garbage cans</a>
                                 <a href="blog-details.html" class="ul-blog-btn">Read More <span class="icon"><i class="flaticon-next"></i></span></a>
                             </div>
                         </div>
@@ -849,13 +861,79 @@
 
 
     <script>
-    // Load header
-    fetch('header.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('header').innerHTML = data;
-      });
 
+        // Load header content first
+fetch('header.html')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        // Insert header HTML into the 'header' div
+        document.getElementById('header').innerHTML = data;
+
+        // Highlight the active menu link
+        const path = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.ul-header-nav a').forEach(link => {
+            if (link.getAttribute('href') === path) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Get references to the elements after header is loaded
+        const sidebarButton = document.getElementById('sidebarOpenButton');
+        const sidebarPanel = document.getElementById('mySidebar');
+        const sidebarCloseButton = document.getElementById('sidebarCloseButton'); // Assumes close button exists
+
+        if (sidebarButton && sidebarPanel) {
+            // Open sidebar
+            sidebarButton.addEventListener('click', function() {
+                console.log('Opening sidebar');
+                sidebarPanel.classList.add('visible');
+            });
+
+            // Close sidebar (if close button exists)
+            if (sidebarCloseButton) {
+                sidebarCloseButton.addEventListener('click', function() {
+                    console.log('Closing sidebar');
+                    sidebarPanel.classList.remove('visible');
+                });
+            }
+
+            // Close sidebar when clicking outside of it
+            document.addEventListener('click', function(event) {
+                const isClickInsideSidebar = sidebarPanel.contains(event.target);
+                const isClickOnOpenButton = sidebarButton.contains(event.target);
+                
+                if (!isClickInsideSidebar && !isClickOnOpenButton && sidebarPanel.classList.contains('visible')) {
+                    console.log('Closing sidebar (clicked outside)');
+                    sidebarPanel.classList.remove('visible');
+                }
+            });
+
+            // Close sidebar with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && sidebarPanel.classList.contains('visible')) {
+                    console.log('Closing sidebar (Escape key)');
+                    sidebarPanel.classList.remove('visible');
+                }
+            });
+
+        } else {
+            console.error("Error: Could not find required elements.");
+            console.error("sidebarOpenButton found:", !!sidebarButton);
+            console.error("mySidebar found:", !!sidebarPanel);
+        }
+    })
+    .catch(error => {
+        console.error('Error loading header:', error);
+    });
+    </script>
+    <script>
     // Load footer
     fetch('footer.html')
       .then(response => response.text())
@@ -866,15 +944,6 @@
       });
 
     </script>
-
-    <!-- <script>
-  document.querySelector('.ul-header-sidebar-opener').addEventListener('click', () => {
-    const sidebar = document.querySelector('.ul-sidebar-menu');
-    if(sidebar) {
-      sidebar.classList.toggle('active'); // Toggle active class to show/hide
-    }
-  });
-</script> -->
 
 
 </body>
