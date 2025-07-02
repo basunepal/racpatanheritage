@@ -240,32 +240,46 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     // gallery slider
     new Swiper(".ul-gallery-slider", {
-        slidesPerView: 2.2,
+        slidesPerView: 2,
         loop: true,
         autoplay: true,
-        centeredSlides: true,
+        centeredSlides: false,
         spaceBetween: 15,
+        navigation: {
+            nextEl: ".ul-gallery-slider-nav.next",
+            prevEl: ".ul-gallery-slider-nav.prev",
+        },
         breakpoints: {
+            0: {
+                slidesPerView: 2,
+                centeredSlides: false,
+            },
             480: {
-                slidesPerView: 3.4,
+                slidesPerView: 3,
+                centeredSlides: true,
             },
             576: {
-                slidesPerView: 4,
+                slidesPerView: 3,
+                centeredSlides: true,
             },
             768: {
-                slidesPerView: 5,
+                slidesPerView: 3,
+                centeredSlides: true,
             },
             992: {
                 spaceBetween: 20,
-                slidesPerView: 5.8,
+                slidesPerView: 3,
+                centeredSlides: true,
             },
             1680: {
                 spaceBetween: 26,
-                slidesPerView: 5.8,
+                slidesPerView: 3,
+                centeredSlides: true,
             },
             1700: {
                 spaceBetween: 30,
-                slidesPerView: 5.8,
+                slidesPerView: 3,
+                centeredSlides: true,
             }
         }
     });
